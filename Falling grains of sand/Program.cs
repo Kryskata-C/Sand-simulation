@@ -1,4 +1,5 @@
-﻿using System;
+using System;
+using System.Threading.Tasks;
 
 class Program
 {
@@ -16,7 +17,7 @@ class Program
             grid[i] = new string[cols];
             for (int j = 0; j < cols; j++)
             {
-                grid[i][j] = "█";
+                grid[i][j] = "█"; 
             }
         }
 
@@ -31,7 +32,7 @@ class Program
             System.Threading.Thread.Sleep(100);
             MoveGrainOfSand();
             RefreshGrid();
-
+            
         }
     }
 
@@ -61,7 +62,7 @@ class Program
     {
         if (row >= 0 && row < grid.Length && col >= 0 && col < grid[row].Length)
         {
-            grid[row][col] = "░";
+            grid[row][col] = "░"; 
         }
     }
 
@@ -82,11 +83,38 @@ class Program
             }
         }
     }
+    //Doesnt work for now. 
+    
+    //static void ExplodeGrainsOfSand(int seccondsTimeWaitFromStart)
+    //{
+    //    for (int i = 0; i < grid.Length; i++ )
+    //    {
+    //        for(int j = 0; j < grid[i].Length; j++)
+    //        {
+    //            if (grid[i][j] == "░")
+    //            {
+    //                if(i - 1 >= 0 && grid[i - 1][j] == "█")
+    //                {
+    //                    grid[i - 1][j] = "░";
+    //                }
+    //                if(i + 1 < grid.Length && grid[i + 1][j] == "█")
+    //                {
+    //                    grid[i + 1][j] = "░";
+    //                }
+    //                if(j - 1 >= 0 && grid[i][j - 1] == "█")
+    //                {
+    //                    grid[i][j - 1] = "░";
+    //                }
+    //                if(j + 1 < grid[i].Length && grid[i][j + 1] == "█")
+    //                {
+    //                    grid[i][j + 1] = "░";
+    //                }
+    //            }
+    //        }
+    //    }
+    //}
+    
 
-    static void ExplodeGrainsOfSand(int seccondsTimeWaitFromStart)
-    {
-
-    }
 
 
     static void RefreshGrid()
