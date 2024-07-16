@@ -19,7 +19,7 @@ class Program
             grid[i] = new char[cols];
             for (int j = 0; j < cols; j++)
             {
-                grid[i][j] = '.'; // Use a dot for empty cells
+                grid[i][j] = '.'; 
             }
         }
 
@@ -27,6 +27,7 @@ class Program
         Console.SetBufferSize(Console.LargestWindowWidth, Console.LargestWindowHeight);
 
         Task.Run(() => GenerateGrainsOfSand());
+        Task.Run(() => MonitorKeyPress());
 
         while (true)
         {
@@ -51,9 +52,52 @@ class Program
         Console.ForegroundColor = ConsoleColor.Gray;
         Console.Write(sb.ToString());
     }
-    
-
-  
+    static void explodeGrains()
+    {
+        for(int i = 0; i < grid.Length; i++)
+        {
+            for(int j = 0; j < grid[i].Length; j++)
+            {
+                if (grid[i][j] == 'o')
+                {
+                    int row = random.Next(5, 10);
+                    int col = random.Next(5, 10);
+                    if(random.Next(0, 2) == 0)
+                    {
+                        if(i - row >= 0)
+                        {
+                            grid[i][j] = '.';
+                            grid[i - row][j] = 'o';
+                        }
+                    }
+                    else
+                    {
+                        if(i + row < grid.Length)
+                        {
+                            grid[i][j] = '.';
+                            grid[i + row][j] = 'o';
+                        }
+                    }
+                    if(random.Next(0, 2) == 0)
+                    {
+                        if(j - col >= 0)
+                        {
+                            grid[i][j] = '.';
+                            grid[i][j - col] = 'o';
+                        }
+                    }
+                    else
+                    {
+                        if(j + col < grid[i].Length)
+                        {
+                            grid[i][j] = '.';
+                            grid[i][j + col] = 'o';
+                        }
+                    }
+                }
+            }
+        }
+    }
 
     static void AddGrainOfSand(int row, int col)
     {
@@ -88,12 +132,25 @@ class Program
             int row = random.Next(0, grid.Length);
             int col = random.Next(0, grid[0].Length);
             AddGrainOfSand(row, col);
-            Thread.Sleep(50); 
+            Thread.Sleep(50);
         }
     }
 
     static void RefreshGrid()
     {
         PrintGrid();
+    }
+
+    static void MonitorKeyPress()
+    {
+        while (true)
+        {
+            if (Console.KeyAvailable)
+            {
+                Console.ReadKey(true); 
+                explodeGrains();
+            }
+            Thread.Sleep(10); 
+        }
     }
 }
